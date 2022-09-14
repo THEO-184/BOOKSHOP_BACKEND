@@ -15,7 +15,9 @@ export const registerHandler: RequestHandler<{}, {}, UserDocument> = async (
 	}
 	const user = await User.create(req.body);
 
-	res.status(StatusCodes.CREATED).json({ user });
+	res
+		.status(StatusCodes.CREATED)
+		.json({ user: { name: user.name, id: user._id } });
 };
 
 export const loginHandler: RequestHandler<{}, {}, UserDocument> = async (

@@ -38,12 +38,6 @@ export const createBookHandler: RequestHandler<{}, {}, BookInput> = async (
 	res.status(StatusCodes.CREATED).json({ book });
 };
 
-export const getAllBooks: RequestHandler = async (req, res) => {
-	const books = await Book.find({}).sort("title");
-
-	res.status(StatusCodes.OK).json({ count: books.length, books });
-};
-
 export const editBookHandler: RequestHandler<
 	{ id: string },
 	{},
@@ -90,4 +84,21 @@ export const deleteBookHandler: RequestHandler<{ id: string }, {}, {}> = async (
 	res
 		.status(StatusCodes.OK)
 		.json({ msg: `book with id : ${req.params.id} successfully deleted` });
+};
+
+export const getBooksHandler: RequestHandler<
+	{},
+	{},
+	{},
+	{ q: string }
+> = async (req, res) => {
+	const { q } = req.query;
+	const queryObj: { title?: any } = {};
+
+	if (q) {
+		queryObj.title = { $regex: q, $options: "i" };
+	}
+
+	const books = await Book.find(queryObj).sort("title");
+	res.status(StatusCodes.OK).json({ count: books.length, books });
 };

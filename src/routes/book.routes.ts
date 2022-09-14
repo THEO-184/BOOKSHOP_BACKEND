@@ -3,7 +3,7 @@ import {
 	createBookHandler,
 	deleteBookHandler,
 	editBookHandler,
-	getAllBooks,
+	getBooksHandler,
 } from "../controllers/user.controller";
 import adminMiddleware, { Roles } from "../middlewares/adminMiddleware";
 import { authMiddleware } from "../middlewares/authMiddleware";
@@ -13,7 +13,7 @@ const router = Router();
 router
 	.route("/")
 	.post(authMiddleware, adminMiddleware(Roles.admin), createBookHandler)
-	.get(getAllBooks);
+	.get(getBooksHandler);
 
 router
 	.route("/:id")
