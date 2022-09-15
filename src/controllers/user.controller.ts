@@ -80,7 +80,6 @@ export const deleteBookHandler: RequestHandler<{ id: string }, {}, {}> = async (
 		throw new NotFound(`no book found with id : ${req.params.id}`);
 	}
 	await book.remove();
-
 	res
 		.status(StatusCodes.OK)
 		.json({ msg: `book with id : ${req.params.id} successfully deleted` });

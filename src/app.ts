@@ -12,6 +12,7 @@ import connectDb from "./db/db";
 import expressErrorMiddleware from "./middlewares/express-error";
 import authRoutes from "./routes/auth.routes";
 import bookRoutes from "./routes/book.routes";
+import cartRoutes from "./routes/cart.routes";
 const app = express();
 
 // cloudinary config
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/books", bookRoutes);
+app.use("/api/v1/cart", cartRoutes);
 
 app.use(expressErrorMiddleware);
 
