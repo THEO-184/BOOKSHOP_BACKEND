@@ -24,8 +24,9 @@ export const createCartHandler: RequestHandler<{}, {}, CartItem> = async (
 
 export const viewCartHandler: RequestHandler = async (req, res) => {
 	const cart = await Cart.find({ createdBy: req.user.id })
-		.populate("bookID", "title description")
-		.populate("createdBy", "name");
+		.populate("bookID")
+		.populate("createdBy", "name")
+		.sort("-createdAt");
 
 	res.status(StatusCodes.OK).json({ count: cart.length, cart });
 };

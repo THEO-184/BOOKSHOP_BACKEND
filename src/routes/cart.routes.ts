@@ -10,14 +10,14 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.route("/").post(authMiddleware, createCartHandler);
-
 router
-	.route("/my-orders")
+	.route("/")
+	.post(authMiddleware, createCartHandler)
 	.get(authMiddleware, viewCartHandler)
 	.delete(authMiddleware, deleteAllCartItemsHandler);
+
 router
-	.route("/my-orders/:id")
+	.route("/:id")
 	.put(authMiddleware, updateCartHandler)
 	.delete(authMiddleware, deleteCartItemHandler);
 
