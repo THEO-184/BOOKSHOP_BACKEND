@@ -92,7 +92,7 @@ export const getBooksHandler: RequestHandler<
 	{ q: string }
 > = async (req, res) => {
 	const { q } = req.query;
-	const queryObj: { title?: any } = {};
+	const queryObj: { title?: any; quantity: any } = { quantity: { $gt: 0 } };
 
 	if (q) {
 		queryObj.title = { $regex: q, $options: "i" };
