@@ -6,19 +6,15 @@ import {
 	deleteAllCartItemsHandler,
 	deleteCartItemHandler,
 } from "../controllers/cart.controller";
-import { authMiddleware } from "../middlewares/authMiddleware";
 
 const router = Router();
 
 router
 	.route("/")
-	.post(authMiddleware, createCartHandler)
-	.get(authMiddleware, viewCartHandler)
-	.delete(authMiddleware, deleteAllCartItemsHandler);
+	.post(createCartHandler)
+	.get(viewCartHandler)
+	.delete(deleteAllCartItemsHandler);
 
-router
-	.route("/:id")
-	.put(authMiddleware, updateCartHandler)
-	.delete(authMiddleware, deleteCartItemHandler);
+router.route("/:id").put(updateCartHandler).delete(deleteCartItemHandler);
 
 export default router;
