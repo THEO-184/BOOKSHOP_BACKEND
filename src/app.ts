@@ -3,6 +3,7 @@ dotenv.config();
 import "express-async-errors";
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 const cloudinary = require("cloudinary").v2;
 import morgan from "morgan";
 import fileUpload from "express-fileupload";
@@ -13,6 +14,9 @@ import expressErrorMiddleware from "./middlewares/express-error";
 import authRoutes from "./routes/auth.routes";
 import bookRoutes from "./routes/book.routes";
 import cartRoutes from "./routes/cart.routes";
+import orderRoutes from "./routes/order.routes";
+import { authMiddleware } from "./middlewares/authMiddleware";
+
 const app = express();
 
 // cloudinary config
@@ -27,6 +31,12 @@ app.use(morgan("tiny"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUpload({ useTempFiles: true }));
+app.use(
+	cors({
+		credentials: true,
+		origin: "http://localhost:3000",
+	})
+);
 
 app.get("/", (req, res) => {
 	res.send("Home");
@@ -34,7 +44,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/books", bookRoutes);
-app.use("/api/v1/cart", cartRoutes);
+app.use("/api/v1/cart", authMiddleware, cartRoutes);
+app.use("/api/v1/orders", authMiddleware, orderRoutes);
 
 app.use(expressErrorMiddleware);
 
