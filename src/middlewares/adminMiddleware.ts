@@ -1,14 +1,11 @@
 import { RequestHandler } from "express";
 import { Unauthorized } from "../errors";
-
-export enum Roles {
-	admin = "admin",
-}
+import { Roles } from "../utils/user.types";
 
 const adminMiddleware =
 	(...user: Roles[]): RequestHandler =>
 	async (req, res, next) => {
-		if (!user.includes(req.user.name as Roles)) {
+		if (!user.includes(req.user.role as Roles)) {
 			throw new Unauthorized("permission denied");
 		}
 		next();

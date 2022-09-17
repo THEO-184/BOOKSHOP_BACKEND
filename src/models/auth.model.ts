@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { UserDocument, UserInput } from "../utils/user.types";
+import { Roles, UserDocument, UserInput } from "../utils/user.types";
 
 const UserSchema = new Schema<UserInput>(
 	{
@@ -17,6 +17,11 @@ const UserSchema = new Schema<UserInput>(
 			type: String,
 			required: true,
 			minlength: [4, "password must be atleast 4 characters"],
+		},
+		role: {
+			type: String,
+			enum: Roles,
+			default: Roles.user,
 		},
 	},
 	{ timestamps: true }

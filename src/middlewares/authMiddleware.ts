@@ -1,6 +1,7 @@
 import { NextFunction, Request, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import { Unauthenticated } from "../errors";
+import { Roles } from "../utils/user.types";
 
 export const authMiddleware: RequestHandler = async (req, res, next) => {
 	const authHeader = req.headers.authorization;
@@ -13,6 +14,7 @@ export const authMiddleware: RequestHandler = async (req, res, next) => {
 		const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as {
 			name: string;
 			id: string;
+			role: Roles;
 		};
 		req.user = decodedToken;
 		next();

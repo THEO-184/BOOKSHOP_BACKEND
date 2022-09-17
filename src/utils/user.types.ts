@@ -5,6 +5,7 @@ declare module "express-serve-static-core" {
 		user: {
 			name: string;
 			id: string;
+			role: Roles;
 		};
 	}
 }
@@ -14,9 +15,14 @@ export interface UserTokenPayload {
 	_id: UserDocument["_id"];
 }
 
+export enum Roles {
+	admin = "admin",
+	user = "user",
+}
 export interface UserInput {
 	name: string;
 	password: string;
+	role: Roles;
 }
 
 export interface UserDocument extends UserInput, mongoose.Document {

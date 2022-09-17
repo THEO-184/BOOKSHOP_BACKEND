@@ -4,9 +4,10 @@ import {
 	deleteBookHandler,
 	editBookHandler,
 	getBooksHandler,
-} from "../controllers/user.controller";
-import adminMiddleware, { Roles } from "../middlewares/adminMiddleware";
+} from "../controllers/book.controller";
+import adminMiddleware from "../middlewares/adminMiddleware";
 import { authMiddleware } from "../middlewares/authMiddleware";
+import { Roles } from "../utils/user.types";
 
 const router = Router();
 
