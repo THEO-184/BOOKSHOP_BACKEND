@@ -3,7 +3,7 @@ import mongoose, { Model } from "mongoose";
 declare module "express-serve-static-core" {
 	interface Request {
 		user: {
-			name: string;
+			username: string;
 			id: string;
 			role: Roles;
 		};
@@ -11,7 +11,7 @@ declare module "express-serve-static-core" {
 }
 
 export interface UserTokenPayload {
-	name: string;
+	username: string;
 	_id: UserDocument["_id"];
 }
 
@@ -20,7 +20,7 @@ export enum Roles {
 	user = "user",
 }
 export interface UserInput {
-	name: string;
+	username: string;
 	password: string;
 	role: Roles;
 }

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { Roles } from "./user.types";
 
 export const createJwt = (payload: {
-	name: string;
+	username: string;
 	id: string;
 	role: Roles;
 }) => {

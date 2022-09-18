@@ -13,8 +13,8 @@ const router = Router();
 
 router
 	.route("/")
-	.post(authMiddleware, adminMiddleware(Roles.admin), createBookHandler)
-	.get(getBooksHandler);
+	.get(getBooksHandler)
+	.post([authMiddleware, adminMiddleware(Roles.admin)], createBookHandler);
 
 router
 	.route("/:id")
