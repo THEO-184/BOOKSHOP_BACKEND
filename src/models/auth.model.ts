@@ -5,7 +5,7 @@ import { Roles, UserDocument, UserInput } from "../utils/user.types";
 
 const UserSchema = new Schema<UserInput>(
 	{
-		name: {
+		username: {
 			type: String,
 			trim: true,
 			required: true,

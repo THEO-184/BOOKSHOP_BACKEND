@@ -12,7 +12,7 @@ export const authMiddleware: RequestHandler = async (req, res, next) => {
 	const token = authHeader.split(" ")[1];
 	try {
 		const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as {
-			name: string;
+			username: string;
 			id: string;
 			role: Roles;
 		};

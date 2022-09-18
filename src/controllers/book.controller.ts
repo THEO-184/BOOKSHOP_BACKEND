@@ -8,6 +8,7 @@ const cloudinary: Cloudinary = require("cloudinary").v2;
 
 import { BookInput } from "../utils/book.types";
 import Book from "../models/book.model";
+import { createBook, editBooks, getBooks } from "../services/books.services";
 
 export const createBookHandler: RequestHandler<{}, {}, BookInput> = async (
 	req,
@@ -33,7 +34,7 @@ export const createBookHandler: RequestHandler<{}, {}, BookInput> = async (
 	fs.unlinkSync(postImage.tempFilePath);
 	req.body.picture = picture;
 
-	const book = await Book.create(req.body);
+	const book = await createBook(req.body);
 
 	res.status(StatusCodes.CREATED).json({ book });
 };
@@ -59,10 +60,9 @@ export const editBookHandler: RequestHandler<
 		req.body.picture = picture;
 	}
 
-	const book = await Book.findOneAndUpdate(
+	const book = await editBooks(
 		{ _id: req.params.id, user: req.user.id },
-		req.body,
-		{ new: true, runValidators: true }
+		req.body
 	);
 
 	if (!book) {
@@ -98,6 +98,6 @@ export const getBooksHandler: RequestHandler<
 		queryObj.title = { $regex: q, $options: "i" };
 	}
 
-	const books = await Book.find(queryObj).sort("title");
+	const books = await getBooks(queryObj);
 	res.status(StatusCodes.OK).json({ count: books.length, books });
 };
