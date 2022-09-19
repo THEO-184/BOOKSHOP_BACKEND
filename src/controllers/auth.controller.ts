@@ -30,5 +30,8 @@ export const loginHandler: RequestHandler<{}, {}, UserDocument> = async (
 
 	res
 		.status(StatusCodes.OK)
-		.json({ user: { username: user.username, id: user._id }, token });
+		.json({
+			user: { username: user.username, id: user._id, role: user.role },
+			token,
+		});
 };

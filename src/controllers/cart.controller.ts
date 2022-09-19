@@ -4,6 +4,7 @@ import Cart from "../models/cart.model";
 import { CartItem } from "../utils/cart.types";
 import Book from "../models/book.model";
 import { BadRequestErr, NotFound } from "../errors";
+import { createCart } from "../services/cart.serivices";
 
 export const createCartHandler: RequestHandler<{}, {}, CartItem> = async (
 	req,
@@ -15,9 +16,7 @@ export const createCartHandler: RequestHandler<{}, {}, CartItem> = async (
 		throw new NotFound(`no book found with id : ${bookID}`);
 	}
 	req.body.createdBy = req.user.id;
-	const cart = await (
-		await Cart.create(req.body)
-	).populate("bookID", "title description");
+	const cart = await createCart(req.body);
 
 	res.status(StatusCodes.OK).json({ cart, msg: "succesfully added to cart" });
 };

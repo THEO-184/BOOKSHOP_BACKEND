@@ -14,7 +14,7 @@ const router = Router();
 router
 	.route("/")
 	.get(getBooksHandler)
-	.post([authMiddleware, adminMiddleware(Roles.admin)], createBookHandler);
+	.post(authMiddleware, adminMiddleware(Roles.admin), createBookHandler);
 
 router
 	.route("/:id")
