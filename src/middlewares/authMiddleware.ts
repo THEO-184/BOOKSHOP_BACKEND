@@ -10,7 +10,6 @@ export const authMiddleware: RequestHandler = async (req, res, next) => {
 		throw new Unauthenticated("user not authenticated");
 	}
 	const token = authHeader.split(" ")[1];
-	console.log("token", token);
 	try {
 		const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as {
 			username: string;

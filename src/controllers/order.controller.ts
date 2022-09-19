@@ -41,11 +41,19 @@ export const createOrderItemsHandler: RequestHandler<
 		total_price,
 		orderBy: req.user.id,
 	});
-	res.status(StatusCodes.OK).json({ order, msg: "abt to create order" });
+	res.status(StatusCodes.OK).json({ order, msg: "order created successfully" });
 };
 
 export const myOrdersHandler: RequestHandler = async (req, res) => {
-	const orders = await Order.find({ orderBy: req.user.id });
+	const orders = await Order.find({ orderBy: req.user.id }).populate(
+		"orderBy",
+		"username"
+	);
 
+	res.status(StatusCodes.OK).json({ count: orders.length, orders });
+};
+
+export const getAllOrders: RequestHandler = async (req, res) => {
+	const orders = await Order.find({}).populate("orderBy", "username");
 	res.status(StatusCodes.OK).json({ count: orders.length, orders });
 };
